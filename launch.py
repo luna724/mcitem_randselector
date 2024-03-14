@@ -15,7 +15,10 @@ if __name__ == "__main__":
     chance *= 100
     
     import random
-    data = [x for x in single_infer(True) if random.randrange(1, 10000, step=1) <= chance]
+    dates = single_infer(True)
+    random.shuffle(dates)
+    
+    data = [x for x in dates if random.randrange(1, 10000, step=1) <= chance]
     if adv_compability:
       return data
     
@@ -48,7 +51,7 @@ if __name__ == "__main__":
       func = module.__dict__["obtain_item"]
       if callable(func):
         func(mcver)
-        return "Success."#, gr.Slider.update(max=get_data_count())
+        return "Success. Restart ui will update the count range in \"Adv. Multiple mode\""#, gr.Slider.update(max=get_data_count())
       else:
         return f"Failed. {func} is not callable"#, gr.Slider.update(visible=True)
     else:
@@ -56,7 +59,7 @@ if __name__ == "__main__":
   
   def adv_infer(chance, count):
     import random
-    data:list = multi_infer(chance, True)
+    data:list = multi_infer(100, True)
     
     while len(data) != count:
       if (random.randrange(1, 10000)/100) <= (chance * 33):
@@ -65,7 +68,7 @@ if __name__ == "__main__":
     text = ""
     for x in data:
       text += x+", "
-    return text.strip(", "), "Success. Restart ui will update the count range in \"Adv. Multiple mode\""
+    return text.strip(", "), "Success."
   
     
   ui = gr.Blocks(title="mcitem_randselector")
